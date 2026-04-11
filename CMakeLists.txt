@@ -9,8 +9,8 @@ add_executable(IAHomework
         include/dsf_and_bfs_1.h
         src/binaryTree.cpp
         include/binaryTree.h
-        src/graph.cpp
         include/graph.h
+        src/graph.cpp
 )
 
 

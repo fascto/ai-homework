@@ -15,45 +15,26 @@ enum class Direction {
 template<typename T>
 class Graph {
 
-    struct Vertex {
-        T data;
-        int weight;
-        bool visited;
-
-        explicit Vertex(T data, int weight);
-    };
-
     struct Edge {
-        Direction dir;
         int from;
         int to;
         int weight;
-
-        explicit Edge(Direction dir, Vertex from, Vertex to);
     };
 
-    std::vector<std::vector<int>> adjacencyMatrix;
+    std::vector<T> vertices;
+    std::vector<std::vector<Edge>> adjList;
+    std::vector<bool> visited;
 
-    std::vector<Edge> edges;
-    std::vector<Vertex> vertices;
-
-    std::vector<bool> visited = {false};
-
-    std::size_t vertexCount {0};
-    std::size_t edgeCount {0};
     bool weighted {false};
     bool directed {false};
 
 public:
-
-    Graph();
+    Graph(bool weighted = false, bool directed = false);
 
     void addVertex(T data);
     void addEdge(int from, int to, int weight = 1);
     void bfs(int startIndex);
-    void dfs(int startIndex);
-
+    void dfs();
     void printGraph();
 };
-
 #endif //IAHOMEWORK_GRAPH_H
