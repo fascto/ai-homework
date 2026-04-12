@@ -10,7 +10,6 @@ add_executable(IAHomework
         src/binaryTree.cpp
         include/binaryTree.h
         include/graph.h
-        src/graph.cpp
 )
 
 
