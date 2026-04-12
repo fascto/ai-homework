@@ -4,8 +4,10 @@
 
 #ifndef IAHOMEWORK_GRAPH_H
 #define IAHOMEWORK_GRAPH_H
+#include <cstring>
 #include <vector>
 #include <iostream>
+#include <queue>
 
 enum class Direction {
     IN,
@@ -28,6 +30,23 @@ class Graph {
 
     bool weighted {false};
     bool directed {false};
+
+    void dfsRec(int index) {
+
+        // Revisar si tiene vecinos
+        // Si tiene entrar Iterar con un for y en cada uno llamar a la funcion
+
+        visited[index] = true;
+
+        std::cout << index << " -> ";
+
+        for (auto& e : adjList[index]) {
+            if (!visited[e.to]) {
+                dfsRec(e.to);
+            }
+        }
+    }
+
 
 public:
 
@@ -87,9 +106,40 @@ public:
     }
 
 
-    void bfs(int startIndex);
+    void bfs(int startIndex) {
 
-    void dfs();
+        if (adjList[startIndex].size() == 0 || adjList.empty()) return;
+
+        std::queue<int> q;
+        q.push(startIndex);
+        visited[startIndex] = true;
+
+        while (!q.empty()) {
+
+            int temp = q.front();
+            q.pop();
+            std::cout << temp << " -> ";
+
+                for (auto& e : adjList[temp]) {
+                    if (!visited[e.to]) {
+                        q.push(e.to);
+                        visited[e.to] = true;
+                    }
+                }
+        }
+        std::cout << "NULL";
+        std::fill(visited.begin(), visited.end(), false);
+    }
+
+    void dfs(int index) {
+        if (adjList[index].size() == 0 || adjList[index].empty()) return;
+
+        dfsRec(index);
+
+        std::fill(visited.begin(), visited.end(), false);
+        std::cout << index << " -> NULL";
+
+    }
 
 };
 #endif //IAHOMEWORK_GRAPH_H
