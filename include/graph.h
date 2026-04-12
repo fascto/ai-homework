@@ -36,9 +36,6 @@ class Graph {
 
     void dfsRec(int index) {
 
-        // Revisar si tiene vecinos
-        // Si tiene entrar Iterar con un for y en cada uno llamar a la funcion
-
         visited[index] = true;
 
         std::cout << index << " -> ";
@@ -188,7 +185,7 @@ public:
         dfsRec(index);
 
         std::fill(visited.begin(), visited.end(), false);
-        std::cout << index << " -> NULL" << std::endl;
+        std::cout << "NULL" << std::endl;
 
     }
 

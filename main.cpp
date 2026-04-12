@@ -34,10 +34,12 @@ int main() {
     std::cout << "BFS" << std::endl;
     graph.bfs(6);
 
+    std::cout << "Djikstra path searching" << std::endl;
     auto path = graph.dijkstra(0, 6);
     for (int n : path) std::cout << n << " -> ";
     std::cout << "NULL" << std::endl;
 
+    std::cout << "Djikstra distance searching" << std::endl;
     auto distances = graph.dijkstra(0);
     for (int d : distances) std::cout << d << " ";
     std::cout << std::endl;
