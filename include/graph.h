@@ -25,6 +25,7 @@ class Graph {
         int from;
         int to;
         int weight;
+        Direction dir;
     };
 
     std::vector<T> vertices;
@@ -195,6 +196,47 @@ public:
 
     std::vector<int> dijkstra(int start, int goal) {
         return dijkstraUtil(start, goal);
+    }
+
+    std::vector<Edge> prim(int source) {
+
+        using PQ = std::priority_queue<std::pair<int,int>, std::vector<std::pair<int,int>>, std::greater<std::pair<int,int>>>;
+
+        std::vector<int> dist;
+        dist.resize(vertices.size(), INF);
+
+        if (adjList.empty()) return std::vector<Edge>();
+
+        dist[source] = 0;
+        std::vector<int> prev;
+        prev.resize(vertices.size(), -1);
+
+        PQ pq;
+
+        pq.push(std::make_pair( dist[source], source));
+
+        while (!pq.empty()) {
+
+            const std::pair<int, int> temp = pq.top();
+            pq.pop();
+
+            for (Edge& e : adjList[temp.second]) {
+
+                if (e.weight < dist[e.to]) {
+                    prev[e.to] = temp.second;
+                    dist[e.to] = e.weight;
+                    pq.push(std::make_pair(dist[e.to] , e.to));
+                }
+            }
+        }
+
+        std::vector<Edge> result;
+
+        for (size_t i = 0; i < prev.size(); i++) {
+            if (prev[i] != -1) result.push_back(Edge{prev[i], i, dist[i], Direction::BOTH});
+        }
+
+        return result;
     }
 
 

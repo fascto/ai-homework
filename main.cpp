@@ -44,4 +44,9 @@ int main() {
     for (int d : distances) std::cout << d << " ";
     std::cout << std::endl;
 
+    auto mst = graph.prim(0);
+    for (auto& e : mst) {
+        std::cout << e.from << " --" << e.weight << "-- " << e.to << "\n";
+    }
+
 }
