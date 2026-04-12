@@ -33,4 +33,13 @@ int main() {
 
     std::cout << "BFS" << std::endl;
     graph.bfs(6);
+
+    auto path = graph.dijkstra(0, 6);
+    for (int n : path) std::cout << n << " -> ";
+    std::cout << "NULL" << std::endl;
+
+    auto distances = graph.dijkstra(0);
+    for (int d : distances) std::cout << d << " ";
+    std::cout << std::endl;
+
 }
