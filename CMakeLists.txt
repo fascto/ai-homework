@@ -10,6 +10,17 @@ add_executable(IAHomework
         src/binaryTree.cpp
         include/binaryTree.h
         include/graph.h
+        src/math_test.cpp
+        include/math/math_test.h
+        include/math/math.h
+        include/math/core.h
+        include/math/calculus.h
+        include/math/linear_algebra.h
+        include/math/types.h
+        include/math/constants.h
+        include/math/linear_algebra/Vec.h
+        include/math/linear_algebra/Matrix.h
+        include/math/linear_algebra/Tensor.h
 )
 
 
