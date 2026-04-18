@@ -1,0 +1,8 @@
+//
+// Created by tdela on 18/4/2026.
+//
+
+#ifndef IAHOMEWORK_CONSTANTS_H
+#define IAHOMEWORK_CONSTANTS_H
+
+#endif //IAHOMEWORK_CONSTANTS_H
