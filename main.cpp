@@ -3,50 +3,78 @@
 #include <iostream>
 #include <ostream>
 #include "./include/graph.h"
+#include "include/math/math_test.h"
+#include "include/math/math.h"
+
+float sqrt(float x) {
+    return x*x + 6*x - 16;
+}
+
 
 int main() {
 
-    std::cout << "ElPepe!" << std::endl;
+    // std::cout << "ElPepe!" << std::endl;
+    //
+    // Graph<int> graph{true, false};
+    //
+    // graph.addVertex(0);
+    // graph.addVertex(1);
+    // graph.addVertex(2);
+    // graph.addVertex(3);
+    // graph.addVertex(4);
+    // graph.addVertex(5);
+    // graph.addVertex(6);
+    //
+    // graph.addEdge(0, 1, 12);
+    // graph.addEdge(0, 2, 3);
+    // graph.addEdge(1, 2, 5);
+    // graph.addEdge(2, 4, 4);
+    // graph.addEdge(3, 4, 6);
+    // graph.addEdge(4, 6, 7);
+    // graph.addEdge(5, 6, 8);
+    // graph.addEdge(1, 5, 11);
+    //
+    // graph.printGraph();
+    // std::cout << "DFS" << std::endl;
+    // graph.dfs(6);
+    //
+    // std::cout << "BFS" << std::endl;
+    // graph.bfs(6);
+    //
+    // std::cout << "Djikstra path searching" << std::endl;
+    // auto path = graph.dijkstra(0, 6);
+    // for (int n : path) std::cout << n << " -> ";
+    // std::cout << "NULL" << std::endl;
+    //
+    // std::cout << "Djikstra distance searching" << std::endl;
+    // auto distances = graph.dijkstra(0);
+    // for (int d : distances) std::cout << d << " ";
+    // std::cout << std::endl;
+    //
+    // auto mst = graph.prim(0);
+    // for (auto& e : mst) {
+    //     std::cout << e.from << " --" << e.weight << "-- " << e.to << "\n";
+    // }
 
-    Graph<int> graph{true, false};
+    function f = { .func = sqrt };
 
-    graph.addVertex(0);
-    graph.addVertex(1);
-    graph.addVertex(2);
-    graph.addVertex(3);
-    graph.addVertex(4);
-    graph.addVertex(5);
-    graph.addVertex(6);
+    const auto t_aprox = taylor(f, 20, 0, 10);
+    const auto r_value = sqrt(20) ;
 
-    graph.addEdge(0, 1, 12);
-    graph.addEdge(0, 2, 3);
-    graph.addEdge(1, 2, 5);
-    graph.addEdge(2, 4, 4);
-    graph.addEdge(3, 4, 6);
-    graph.addEdge(4, 6, 7);
-    graph.addEdge(5, 6, 8);
-    graph.addEdge(1, 5, 11);
+    std::cout << "Target Value:" << r_value << std::endl;
+    std::cout << "Aprox Value (n = 10)" << t_aprox << std::endl;
 
-    graph.printGraph();
-    std::cout << "DFS" << std::endl;
-    graph.dfs(6);
+    std::cout << "Sin 1: " << sin(0) << std::endl;
+    std::cout << "Sin pi/2" << sin(std::numbers::pi/2) << std::endl;
+    std::cout << "Sin pi" << sin(std::numbers::pi) << std::endl;
 
-    std::cout << "BFS" << std::endl;
-    graph.bfs(6);
+    std::cout << "Cos 1: " << cos(0) << std::endl;
+    std::cout << "Cos pi/2: " << cos(std::numbers::pi/2) << std::endl;
+    std::cout << "Cos pi: " << cos(std::numbers::pi) << std::endl;
 
-    std::cout << "Djikstra path searching" << std::endl;
-    auto path = graph.dijkstra(0, 6);
-    for (int n : path) std::cout << n << " -> ";
-    std::cout << "NULL" << std::endl;
+    std::cout << "e: " << e << std::endl;
+    std::cout << "pi: " << pi() << std::endl;
 
-    std::cout << "Djikstra distance searching" << std::endl;
-    auto distances = graph.dijkstra(0);
-    for (int d : distances) std::cout << d << " ";
-    std::cout << std::endl;
-
-    auto mst = graph.prim(0);
-    for (auto& e : mst) {
-        std::cout << e.from << " --" << e.weight << "-- " << e.to << "\n";
-    }
+    std::cout << "sqrt(25): " << math::core::sqrt(25) << std::endl;
 
 }
