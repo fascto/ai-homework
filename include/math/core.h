@@ -120,7 +120,7 @@ namespace math::core {
     inline float sqrt(const float x, const float b = 2) {
         types::function f;
         f.func = [x, b](const float t) -> float {
-            return core::pow(t, b)-x;
+            return pow(t, b)-x;
         };
 
         auto df = f;
@@ -128,7 +128,7 @@ namespace math::core {
 
         float result{1.f};
         float prev{1.f};
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 500; i++) {
             prev = result;
             result = (result + (x/result))/2;
 
@@ -137,6 +137,7 @@ namespace math::core {
         }
         return result;
     }
+
 }
 
 #endif //IAHOMEWORK_CORE_H

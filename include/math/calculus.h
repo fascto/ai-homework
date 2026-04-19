@@ -30,17 +30,16 @@ namespace math::calculus {
         return result;
     }
 
-    inline float taylor(types::function& f, const float x, const float a=0, const unsigned int n=500) {
-
+    inline float taylor(types::function &f, const float x, const float a = 0, const unsigned int n = 500) {
         float result{.0f};
         float prev{.0f};
 
         f.order = 0;
-        for (int i=0; i<n; i++) {
+        for (int i = 0; i < n; i++) {
             prev = result;
-            result += evaluate(f, a)/static_cast<float>(math::core::factorial(i)) * math::core::pow(x - a, i);
+            result += evaluate(f, a) / static_cast<float>(core::factorial(i)) * core::pow(x - a, i);
 
-            if (math::core::abs(result-prev) < epsilon)
+            if (core::abs(result - prev) < epsilon)
                 return result;
 
             f.order++;

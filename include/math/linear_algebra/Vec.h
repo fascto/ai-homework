@@ -16,8 +16,7 @@ namespace math::linear_algebra {
         size_t dim{};
 
     public:
-
-        Vec(const std::vector<float>& values = std::vector<float>()){
+        explicit Vec(const std::vector<float>& values = std::vector<float>()){
 
             for (float value : values) {
                 storage.push_back(value);
