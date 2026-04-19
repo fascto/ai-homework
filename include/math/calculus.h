@@ -6,17 +6,16 @@
 #define IAHOMEWORK_CALCULUS_H
 
 #include "types.h"
-#include "core.h"
 
 static constexpr float epsilon = 1e-6;
 
 namespace math::calculus {
 
-    inline function derivative(const function& f) {
-        return function { .func = f.func , .order=f.order + 1 };
+    inline types::function derivative(const types::function& f) {
+        return types::function { .func = f.func , .order=f.order + 1 };
     };
 
-    inline float evaluate(function f, const float eval_points) {
+    inline float evaluate(types::function f, const float eval_points) {
         float result{.0f};
 
         if (f.order <= 0)
@@ -31,7 +30,7 @@ namespace math::calculus {
         return result;
     }
 
-    inline float taylor(function& f, const float x, const float a=0, const unsigned int n=500) {
+    inline float taylor(types::function& f, const float x, const float a=0, const unsigned int n=500) {
 
         float result{.0f};
         float prev{.0f};
@@ -39,9 +38,9 @@ namespace math::calculus {
         f.order = 0;
         for (int i=0; i<n; i++) {
             prev = result;
-            result += evaluate(f, a)/static_cast<float>(core::factorial(i)) * core::pow(x - a, i);;
+            result += evaluate(f, a)/static_cast<float>(math::core::factorial(i)) * math::core::pow(x - a, i);
 
-            if (core::abs(result-prev) < epsilon)
+            if (math::core::abs(result-prev) < epsilon)
                 return result;
 
             f.order++;
@@ -50,6 +49,26 @@ namespace math::calculus {
         return result;
     }
 
+    inline float nth_root(const float x, const float b) {
+        types::function f;
+        f.func = [x, b](const float t) -> float {
+            return core::pow(t, b)-x;
+        };
+
+        auto df = f;
+        df.order = 1;
+
+        float result{1.f};
+        float prev{1.f};
+        for (int i = 0; i < 200; i++) {
+            prev = result;
+            result = result - (evaluate(f, result)/evaluate(df, result));
+
+            if (core::abs(prev - result) < epsilon_core)
+                return result;
+        }
+        return result;
+    }
 
 }
 

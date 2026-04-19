@@ -6,8 +6,10 @@
 #define IAHOMEWORK_CORE_H
 
 #include "constants.h"
+#include "types.h"
+#include <iostream>
 
-static constexpr float epsilon = 1e-6;
+static constexpr float epsilon_core = 1e-6;
 
 namespace math::core {
     inline long long factorial(const int a) {
@@ -16,13 +18,15 @@ namespace math::core {
         return a * factorial(a - 1);
     }
 
-    inline float pow(const float a, int b) {
+    inline float pow(const float a, float b = 2.f) {
         float result = 1.0f;
         while (b > 0) {
             result *= a;
             b--;
         }
+
         return result;
+
     }
 
     inline float abs(const float x) {
@@ -44,7 +48,7 @@ namespace math::core {
             result += static_cast<float>((sign*(-1))) * pow(x - a, i)/static_cast<float>(factorial(i));
             sign = sign*-1;
 
-            if (abs(result-prev) < epsilon)
+            if (abs(result-prev) < epsilon_core)
                 return result;
         }
         return result;
@@ -64,7 +68,7 @@ namespace math::core {
             result += static_cast<float>((sign*(-1))) * pow(x - a, i)/static_cast<float>(factorial(i));
             sign = sign*-1;
 
-            if (abs(result-prev) < epsilon)
+            if (abs(result-prev) < epsilon_core)
                 return result;
         }
         return result;
@@ -81,7 +85,7 @@ namespace math::core {
             prev = result;
             result += 1/static_cast<float>(factorial(i));
 
-            if (abs(result-prev) < epsilon)
+            if (abs(result-prev) < epsilon_core)
                 return pow(result, x);
         }
         return pow(result, x);
@@ -103,18 +107,35 @@ namespace math::core {
             sign = sign*-1;
             std::cout << result << std::endl;
 
-            if (abs(result-prev) < )
+            if (abs(result-prev) < epsilon_core )
                 return result;
         }
         return result;
     }
 
-    inline inverse(float b) {
+    inline float inverse(const float b) {
         return 1.0f/b;
     }
 
-    inline sqrt(float x, float b) {
-        pow(x, inverse(b));
+    inline float sqrt(const float x, const float b = 2) {
+        types::function f;
+        f.func = [x, b](const float t) -> float {
+            return core::pow(t, b)-x;
+        };
+
+        auto df = f;
+        df.order = 1;
+
+        float result{1.f};
+        float prev{1.f};
+        for (int i = 0; i < 200; i++) {
+            prev = result;
+            result = (result + (x/result))/2;
+
+            if (core::abs(prev - result) < epsilon_core)
+                return result;
+        }
+        return result;
     }
 }
 

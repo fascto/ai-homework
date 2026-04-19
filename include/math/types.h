@@ -5,12 +5,14 @@
 #ifndef IAHOMEWORK_TYPES_H
 #define IAHOMEWORK_TYPES_H
 
+#include <functional>
+
 namespace math::types {
-    typedef float (*f)(float);
+    using f = std::function<float(float)>;
 
     struct function {
         f func{};
-        unsigned int order{1};
+        unsigned int order{0};
         float h{0.01f};
     };
 }

@@ -5,6 +5,7 @@
 #include "./include/graph.h"
 #include "include/math/math_test.h"
 #include "include/math/math.h"
+#include "include/math/linear_algebra/Vec.h"
 
 float sqrt(float x) {
     return x*x + 6*x - 16;
@@ -56,25 +57,22 @@ int main() {
     //     std::cout << e.from << " --" << e.weight << "-- " << e.to << "\n";
     // }
 
-    function f = { .func = sqrt };
+    std::cout << "Sin 1: " << math::core::sin(0) << std::endl;
+    std::cout << "Sin pi/2" << math::core::sin(math::constants::PI/2) << std::endl;
+    std::cout << "Sin pi" << math::core::sin(math::constants::PI) << std::endl;
 
-    const auto t_aprox = taylor(f, 20, 0, 10);
-    const auto r_value = sqrt(20) ;
+    std::cout << "Cos 1: " << math::core::cos(0) << std::endl;
+    std::cout << "Cos pi/2: " << math::core::cos(math::constants::PI/2) << std::endl;
+    std::cout << "Cos pi: " << math::core::cos(math::constants::PI) << std::endl;
 
-    std::cout << "Target Value:" << r_value << std::endl;
-    std::cout << "Aprox Value (n = 10)" << t_aprox << std::endl;
+    std::cout << "sqrt(25): " << math::core::sqrt(25, 2) << std::endl;
 
-    std::cout << "Sin 1: " << sin(0) << std::endl;
-    std::cout << "Sin pi/2" << sin(std::numbers::pi/2) << std::endl;
-    std::cout << "Sin pi" << sin(std::numbers::pi) << std::endl;
+    // Linear alg
+    const math::linear_algebra::Vec v{{2, 2}};
+    v.print();
+    std::cout << v.norm() << std::endl;
+    const auto v_normalized = v.normalization();
 
-    std::cout << "Cos 1: " << cos(0) << std::endl;
-    std::cout << "Cos pi/2: " << cos(std::numbers::pi/2) << std::endl;
-    std::cout << "Cos pi: " << cos(std::numbers::pi) << std::endl;
-
-    std::cout << "e: " << e << std::endl;
-    std::cout << "pi: " << pi() << std::endl;
-
-    std::cout << "sqrt(25): " << math::core::sqrt(25) << std::endl;
+    v_normalized.print();
 
 }
