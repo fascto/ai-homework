@@ -78,18 +78,18 @@ int main() {
 
     // Matrix
     math::linear_algebra::Matrix m1 {
-                        {
-                            {2.f,-1.f,3.f},
-                            {1.f,2.f,1.f},
-                            {3.f,1.f,2.f},
-                            }
+                            {
+                                {2.f,-1.f,3.f},
+                                {1.f,2.f,1.f},
+                                {3.f,1.f,2.f},
+                                }
     };
 
     math::linear_algebra::Matrix m2 {
-                        {
-                            {1.f,1.f,1.f},
-                            {2.f,2.f,2.f},
-                            }
+                            {
+                                {1.f,1.f,1.f},
+                                {2.f,2.f,2.f},
+                                }
     };
 
     m1.print();
@@ -138,6 +138,17 @@ int main() {
 
     std::cout << "Verificacion(m1*m1^-1): " << std::endl;
 
-    m1_inv.mul(m1).print();
+    (m1_inv*m1).print();
 
+    auto c1 = (m1_inv*m1);
+
+    auto c2 = (m1_inv*m1)*10.f;
+
+    auto re1 = c1.element_wise_gt(c2);
+
+    if (!re1) throw std::logic_error("No son del mismo tamaño :v");
+
+    re1->print();
+
+    (m2.transpose()*m2).print();
 }

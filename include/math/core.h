@@ -74,7 +74,7 @@ namespace math::core {
         return result;
     }
 
-    inline float exp(const int x, const float a=0) {
+    inline float exp(const float x, const float a=0) {
 
         constexpr int n = 500;
 

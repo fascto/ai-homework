@@ -21,6 +21,8 @@ add_executable(IAHomework
         include/math/linear_algebra/Vec.h
         include/math/linear_algebra/Matrix.h
         include/math/linear_algebra/Tensor.h
+        include/ml/activations.h
+        include/ml/ml.h
 )
 
 
