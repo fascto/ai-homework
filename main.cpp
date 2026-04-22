@@ -14,7 +14,6 @@ float sqrt(float x) {
 
 
 int main() {
-
     // std::cout << "ElPepe!" << std::endl;
     //
     // Graph<int> graph{true, false};
@@ -79,18 +78,18 @@ int main() {
 
     // Matrix
     math::linear_algebra::Matrix m1 {
-                {
-                    {2.f,-1.f,3.f},
-                    {1.f,2.f,1.f},
-                    {3.f,1.f,2.f},
-                    }
+                        {
+                            {2.f,-1.f,3.f},
+                            {1.f,2.f,1.f},
+                            {3.f,1.f,2.f},
+                            }
     };
 
     math::linear_algebra::Matrix m2 {
-                {
-                    {1.f,1.f,1.f},
-                    {2.f,2.f,2.f},
-                    }
+                        {
+                            {1.f,1.f,1.f},
+                            {2.f,2.f,2.f},
+                            }
     };
 
     m1.print();
@@ -110,5 +109,35 @@ int main() {
     m1.print();
 
     std::cout << "Determinante de m1: " << elpepe << std::endl;
+
+    auto m5 = math::linear_algebra::Matrix::augment(m1, m4);
+    m5.print();
+
+
+
+    auto iv = std::vector<math::linear_algebra::Matrix>(
+    {
+        math::linear_algebra::Matrix::getIdentityMatrix(1),
+        math::linear_algebra::Matrix::getIdentityMatrix(3),
+        math::linear_algebra::Matrix::getIdentityMatrix(2),
+        math::linear_algebra::Matrix::getIdentityMatrix(5),
+    }
+);
+
+    for ( const auto& i : iv) {
+        i.print();
+    }
+
+    std::cout << "Matrix(m1): " << std::endl;
+    m1.print();
+
+    std::cout << "Inverse Matrix: " << std::endl;
+
+    const auto m1_inv = m1.inverse();
+    m1_inv.print();
+
+    std::cout << "Verificacion(m1*m1^-1): " << std::endl;
+
+    m1_inv.mul(m1).print();
 
 }

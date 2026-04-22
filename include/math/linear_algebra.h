@@ -6,7 +6,11 @@
 #define IAHOMEWORK_LINEAR_ALGEBRA_H
 #include <vector>
 
+#include "linear_algebra/Matrix.h"
+
 namespace linear_algebra {
+
+
 
 }
 
