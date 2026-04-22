@@ -23,6 +23,26 @@ namespace math::linear_algebra {
             std::ranges::copy(matrix, back_inserter(storage));
         }
 
+        Matrix operator+(const Matrix& matrix) const {
+            return sum(matrix, false);
+        }
+
+        Matrix operator-(const Matrix& matrix) const {
+            return sub(matrix, false);
+        }
+
+        Matrix operator*(const Matrix& matrix) const {
+            return mul(matrix).value();
+        }
+
+        Matrix operator*(const float scalar) const {
+            return scalar_mul(scalar);
+        }
+
+        Matrix operator/(const float scalar) const {
+            return scalar_div(scalar);
+        }
+
         void print() const {
             std::string out = "[\n";
             for (size_t i = 0; i < storage.size(); ++i) {
@@ -85,19 +105,24 @@ namespace math::linear_algebra {
             return result;
         }
 
-        Matrix mul(const Matrix& matrix, const bool broadcasting = false) const {
+        [[nodiscard]] std::optional<Matrix> mul(const Matrix& matrix, const bool broadcasting = false) const {
+
+            if (storage[0].size() != matrix.storage.size())
+                return std::nullopt;
 
             const auto rows = storage.size();
-            const auto cols = storage[0].size();
+            const auto cols = matrix.storage[0].size();
 
             Matrix result {std::vector(rows, std::vector(cols, 0.f))};
 
-            for (size_t i = 0; i < storage.size(); ++i) {
-                for (size_t j = 0; j < storage[0].size(); ++j) {
-                    for (size_t k = 0; k < storage.size(); ++k) {
+            for (size_t i = 0; i < rows; ++i) {
+                for (size_t j = 0; j < cols; ++j) {
+                    for (size_t k = 0; k < storage[0].size(); ++k) {
                         result.storage[i][j] += this->storage[i][k] * matrix.storage[k][j];
                     }
+                    if (core::abs(result.storage[i][j]) < 1e-6f) result.storage[i][j] = 0.f;
                 }
+
             }
 
             return result;
@@ -129,8 +154,48 @@ namespace math::linear_algebra {
             return result;
         }
 
-        Matrix normalize() {
+        [[nodiscard]] std::optional<Matrix> element_wise_gt(const Matrix& m) const {
 
+            if (storage.size() != m.storage.size())
+                return std::nullopt;
+
+            const auto rows = m.storage.size();
+            const auto cols = m.storage[0].size();
+
+            Matrix result {std::vector(rows, std::vector(cols, 0.f))};
+
+            for (size_t i = 0; i < m.storage.size(); ++i) {
+                for (size_t j = 0; j < m.storage[i].size(); ++j) {
+                    if (storage[i][j] > m.storage[i][j])
+                        result.storage[i][j] = 1;
+                    else
+                        result.storage[i][j] = 0;
+                }
+            }
+
+            return result;
+        }
+
+        [[nodiscard]] std::optional<Matrix> element_wise_lt(const Matrix& m) const {
+
+            if (storage.size() != m.storage.size())
+                return std::nullopt;
+
+            const auto rows = m.storage.size();
+            const auto cols = m.storage[0].size();
+
+            Matrix result {std::vector(rows, std::vector(cols, 0.f))};
+
+            for (size_t i = 0; i < m.storage.size(); ++i) {
+                for (size_t j = 0; j < m.storage[i].size(); ++j) {
+                    if (storage[i][j] < m.storage[i][j])
+                        result.storage[i][j] = 1;
+                    else
+                        result.storage[i][j] = 0;
+                }
+            }
+
+            return result;
         }
 
 
@@ -221,7 +286,6 @@ namespace math::linear_algebra {
             float factor{0.f};
 
             const auto cols = matrix.storage[0].size();
-            float sign{1};
 
             for (size_t i = result.storage.size()-1 ; i > 0 ; i--) {
                 pivot = result.storage[i][i];
@@ -229,6 +293,7 @@ namespace math::linear_algebra {
                     factor = result.storage[j][i]/pivot;
                     for (int k = 0; k < cols; k++) {
                         result.storage[j][k] -= factor * result.storage[i][k];
+                        if (core::abs(result.storage[j][k]) < 1e-7f) result.storage[j][k] = 0.f;
                     }
                 }
             }
@@ -252,7 +317,7 @@ namespace math::linear_algebra {
             const auto result = gaussian_elimination(*this, &swaps);
 
             if (swaps % 2 == 1) {
-                sign = 1;
+                sign = -1;
             }
 
 
