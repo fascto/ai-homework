@@ -175,7 +175,7 @@ int main() {
 
     std::vector<float> y {0.f, 0.f, 0.f, 1.f};
 
-    Perceptron p {X, y, ml::activations::ActivationFunction::STEP, 0.f, 100};
+    Perceptron p {X, y, ml::activations::ActivationFunction::STEP, 0.f, 1000000};
     p.train();
 
     for (auto vp = p.predict(X).value(); const auto& i : vp) {

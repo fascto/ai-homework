@@ -23,16 +23,15 @@ class Perceptron {
     float m_learning_rate{0.1f};
 
     void initWeights() {
+        const auto num_features = m_feature_matrix.getCols();
 
-        const auto cols = m_feature_matrix.getCols();
-
-        m_weights.resize(cols, 0);
+        m_weights.resize(num_features, 0);
 
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution dis(0.f, 1.f);
 
-        for (int i = 0; i < cols; ++i) {
+        for (int i = 0; i < num_features; ++i) {
             m_weights[i] = dis(gen);
         }
     }
@@ -57,9 +56,9 @@ public:
     }
 
     [[nodiscard]] float weightedSum(const int sample_idx) const {
-        float result{0.f};
+        float result{m_bias};
         for (int i = 0; i < m_feature_matrix.getCols(); ++i) {
-            result += m_weights[i] * m_feature_matrix.get(i, sample_idx) + m_bias;
+            result += m_weights[i] * m_feature_matrix.get(i, sample_idx);
         }
         return result;
     }
@@ -78,10 +77,11 @@ public:
             for (int j = 0; j < m_feature_matrix.getRows() ; ++j) {
                 error = 0.f;
                 result = apply(weightedSum(j));
-                error += result - m_labels[j];
+                error = m_labels[j] - result;
                 for (int k = 0; k < m_weights.size(); ++k) {
                     m_weights[k] = m_weights[k] + m_learning_rate * error * m_feature_matrix.get(k, j);
                 }
+                m_bias += + m_learning_rate * error;
             }
         }
     }
@@ -92,7 +92,7 @@ public:
 
     [[nodiscard]] std::optional<float> predict(const std::vector<float> &sample) const {
 
-        if (sample.size() != m_feature_matrix.getRows())
+        if (sample.size() != m_feature_matrix.getCols())
             return std::nullopt;
 
         float result{};
@@ -116,10 +116,10 @@ public:
         std::vector<float> result{};
         float sum{0.f};
 
-        for (int i = 0; i < sample.getCols(); ++i) {
+        for (int i = 0; i < sample.getRows(); ++i) {
             sum=0.f;
-            for (int j = 0; j < sample.getRows(); ++j) {
-                sum += sample.get(i, j) * m_weights[j];
+            for (int j = 0; j < sample.getCols(); ++j) {
+                sum += sample.get(j, i) * m_weights[j];
             }
             result.push_back(apply(sum + m_bias));
         }
