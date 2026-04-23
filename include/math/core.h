@@ -18,8 +18,16 @@ namespace math::core {
         return a * factorial(a - 1);
     }
 
+    inline float inverse(const float b) {
+        return 1.0f/b;
+    }
+
     inline float pow(const float a, float b = 2.f) {
         float result = 1.0f;
+        if (b < 0) {
+            return inverse(pow(a, -b));
+        }
+
         while (b > 0) {
             result *= a;
             b--;
@@ -83,12 +91,12 @@ namespace math::core {
 
         for (int i=0; i<n; i++) {
             prev = result;
-            result += 1/static_cast<float>(factorial(i));
+            result += pow(x, i)/static_cast<float>(factorial(i));
 
             if (abs(result-prev) < epsilon_core)
-                return pow(result, x);
+                return result;
         }
-        return pow(result, x);
+        return result;
     }
 
     const float e = exp(1);
@@ -111,10 +119,6 @@ namespace math::core {
                 return result;
         }
         return result;
-    }
-
-    inline float inverse(const float b) {
-        return 1.0f/b;
     }
 
     inline float sqrt(const float x, const float b = 2) {
