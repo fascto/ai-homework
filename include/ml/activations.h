@@ -9,6 +9,14 @@
 
 namespace ml::activations {
 
+    enum class ActivationFunction {
+        STEP,
+        SIGMOID,
+        RELU,
+        ARCTG,
+        TANH
+    };
+
     inline float step(const float input) {
         if (input < 0)
             return 0;
@@ -21,17 +29,32 @@ namespace ml::activations {
 
     inline float ReLU(const float input) {
         if (input < 0) return 0;
-
-
-        return 0;
+        return input;
     }
 
-    inline float arctg() {
+    inline float arctg(float input) {
 
     }
 
-    inline tgh() {
+    inline float tanh(float input) {
 
+    }
+
+    inline float apply(const ActivationFunction activation_function, const float x) {
+        switch (activation_function) {
+            case ActivationFunction::STEP:
+                return step(x);
+            case ActivationFunction::SIGMOID:
+                return sigmoid(x);
+            case ActivationFunction::RELU:
+                return ReLU(x);
+            case ActivationFunction::TANH:
+                return tanh(x);
+            case ActivationFunction::ARCTG:
+                return arctg(x);
+            default:
+                return 0;
+        }
     }
 
 }
