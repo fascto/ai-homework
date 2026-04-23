@@ -65,6 +65,18 @@ namespace math::linear_algebra {
             std::cout << out << std::endl;
         }
 
+        [[nodiscard]] float get(const size_t row, const size_t col) const {
+            return storage[row][col];
+        }
+
+        [[nodiscard]] size_t getCols() const {
+            return storage.size();
+        }
+
+        [[nodiscard]] size_t getRows() const {
+            return storage[0].size();
+        }
+
         [[nodiscard]] Matrix sum(const Matrix& matrix, const bool broadcasting = false) const {
             if ( ( matrix.storage.size() != storage.size() ||
                 matrix.storage[0].size() != storage[0].size() )

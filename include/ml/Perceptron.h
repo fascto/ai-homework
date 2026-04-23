@@ -1,0 +1,8 @@
+//
+// Created by tdela on 23/4/2026.
+//
+
+#ifndef IAHOMEWORK_PERCEPTRON_H
+#define IAHOMEWORK_PERCEPTRON_H
+
+#endif //IAHOMEWORK_PERCEPTRON_H
