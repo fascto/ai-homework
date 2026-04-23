@@ -1,5 +1,6 @@
 
 
+#include <cmath>
 #include <iostream>
 #include <ostream>
 #include "./include/graph.h"
@@ -7,6 +8,8 @@
 #include "include/math/math.h"
 #include "include/math/linear_algebra/Matrix.h"
 #include "include/math/linear_algebra/Vec.h"
+#include "include/ml/activations.h"
+#include "include/ml/Perceptron.h"
 
 float sqrt(float x) {
     return x*x + 6*x - 16;
@@ -151,4 +154,31 @@ int main() {
     re1->print();
 
     (m2.transpose()*m2).print();
+
+    std::cout << std::endl;
+    std::cout << "Exp: " << std::endl;
+
+    std::cout << exp(-1) << std::endl;
+    std::cout << exp(0) << std::endl;
+    std::cout << exp(1) << std::endl;
+
+    std::cout << ml::activations::sigmoid(1) << std::endl;
+    std::cout << ml::activations::sigmoid(0) << std::endl;
+    std::cout << ml::activations::sigmoid(-1) << std::endl;
+
+    math::linear_algebra::Matrix X {
+        {
+            {0.f, 0.f, 1.f, 1.f},
+            {0.f, 1.f, 0.f, 1.f}
+        }
+    };
+
+    std::vector<float> y {0.f, 0.f, 0.f, 1.f};
+
+    Perceptron p {X, y, ml::activations::ActivationFunction::STEP, 0.f, 100};
+    p.train();
+
+    for (auto vp = p.predict(X).value(); const auto& i : vp) {
+        std::cout << i << std::endl;
+    }
 }

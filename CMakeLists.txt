@@ -23,6 +23,7 @@ add_executable(IAHomework
         include/math/linear_algebra/Tensor.h
         include/ml/activations.h
         include/ml/ml.h
+        include/ml/Perceptron.h
 )
 
 
