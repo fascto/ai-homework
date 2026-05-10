@@ -24,6 +24,8 @@ add_executable(IAHomework
         include/ml/activations.h
         include/ml/ml.h
         include/ml/Perceptron.h
+        include/ml/MLP.h
+        include/ml/metrics.h
 )
 
 
