@@ -77,6 +77,10 @@ namespace math::linear_algebra {
             return storage[0].size();
         }
 
+        [[nodiscard]] std::vector<float> getCol(const int index) const {
+            return storage[index];
+        }
+
         [[nodiscard]] Matrix sum(const Matrix& matrix, const bool broadcasting = false) const {
             if ( ( matrix.storage.size() != storage.size() ||
                 matrix.storage[0].size() != storage[0].size() )

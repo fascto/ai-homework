@@ -13,7 +13,7 @@ namespace math::types {
     struct function {
         f func{};
         unsigned int order{0};
-        float h{0.01f};
+        float h{0.0001f};
     };
 }
 #endif //IAHOMEWORK_TYPES_H

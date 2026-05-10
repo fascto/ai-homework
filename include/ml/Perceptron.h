@@ -95,16 +95,13 @@ public:
         if (sample.size() != m_feature_matrix.getCols())
             return std::nullopt;
 
-        float result{};
-        float sum{0.f};
-
+        float sum{m_bias};
 
         for (int i = 0; i < m_feature_matrix.getCols(); ++i) {
-                sum += m_weights[i] * sample[i] + m_bias;
-                result = (apply(sum));
+                sum += m_weights[i] * sample[i];
         }
 
-        return result;
+        return apply(sum);
     }
 
 
