@@ -53,7 +53,7 @@ namespace ml::activations {
             case ActivationFunction::ARCTG:
                 return arctg(x);
             default:
-                return 0;
+                return -1;
         }
     }
 
