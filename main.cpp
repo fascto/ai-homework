@@ -9,6 +9,7 @@
 #include "include/math/linear_algebra/Matrix.h"
 #include "include/math/linear_algebra/Vec.h"
 #include "include/ml/activations.h"
+#include "include/ml/metrics.h"
 #include "include/ml/Perceptron.h"
 
 float sqrt(float x) {
@@ -173,12 +174,24 @@ int main() {
         }
     };
 
-    std::vector<float> y {0.f, 0.f, 0.f, 1.f};
+    std::vector y {0.f, 0.f, 0.f, 1.f};
 
-    Perceptron p {X, y, ml::activations::ActivationFunction::STEP, 0.f, 1000000};
+    Perceptron p {X, y, ml::activations::ActivationFunction::STEP, 0.f, 1000};
     p.train();
 
+    std::cout << "entrada para entrenar la neurona para AND: " << std::endl;
+
+    X.print();
+
+    std::cout << "resultados prime de la neurona entrenada con 1000 para AND: " << std::endl;
     for (auto vp = p.predict(X).value(); const auto& i : vp) {
         std::cout << i << std::endl;
     }
+
+    std::vector<float> observed { 150, 200, 300 };
+    std::vector<float> predicted { 160, 190, 320 };
+
+
+    std::cout << mse(observed, predicted) << std::endl;
+
 }
