@@ -6,11 +6,12 @@
 #define IAHOMEWORK_CALCULUS_H
 
 #include "types.h"
+#include "../ml/activations.h"
+#include "../ml/metrics.h"
 
 static constexpr float epsilon = 1e-6;
 
 namespace math::calculus {
-
     inline types::function derivative(const types::function& f) {
         return types::function { .func = f.func , .order=f.order + 1 };
     };
@@ -69,6 +70,15 @@ namespace math::calculus {
         return result;
     }
 
+    inline std::vector<float> gradient_descent(
+        const std::vector<float>& weights,
+        const std::vector<float>& gradients,
+        const float learning_rate
+    ) {
+        std::vector<float> updated(weights.size());
+        for (int i = 0; i < weights.size(); i++) {
+            updated[i] = weights[i] - learning_rate * gradients[i];
+        }
+        return updated;
+    }
 }
-
-#endif //IAHOMEWORK_CALCULUS_H
