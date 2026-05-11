@@ -23,6 +23,16 @@ namespace math::linear_algebra {
             std::ranges::copy(matrix, back_inserter(storage));
         }
 
+        explicit Matrix(const size_t rows, const size_t cols, const float init_val = 0.f) {
+            storage.assign(rows, std::vector<float>(cols, init_val));
+        }
+
+        explicit Matrix(const std::vector<float>& col) {
+            storage.resize(col.size(), std::vector<float>(1));
+            for (size_t i = 0; i < col.size(); i++)
+                storage[i][0] = col[i];
+        }
+
         Matrix operator+(const Matrix& matrix) const {
             return sum(matrix, false);
         }
@@ -67,6 +77,10 @@ namespace math::linear_algebra {
 
         [[nodiscard]] float get(const size_t row, const size_t col) const {
             return storage[row][col];
+        }
+
+        void set(const size_t row, const size_t col, const float value) {
+            storage[row][col] = value;
         }
 
         [[nodiscard]] size_t getCols() const {
