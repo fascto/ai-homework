@@ -8,6 +8,7 @@
 #include "types.h"
 #include "../ml/activations.h"
 #include "../ml/metrics.h"
+#include "linear_algebra/Matrix.h"
 
 static constexpr float epsilon = 1e-6;
 
@@ -70,15 +71,17 @@ namespace math::calculus {
         return result;
     }
 
-    inline std::vector<float> gradient_descent(
-        const std::vector<float>& weights,
-        const std::vector<float>& gradients,
+    inline std::vector<linear_algebra::Matrix> gradient_descent(
+        const std::vector<linear_algebra::Matrix>& weights,
+        const std::vector<linear_algebra::Matrix>& gradients,
         const float learning_rate
     ) {
-        std::vector<float> updated(weights.size());
+        std::vector<linear_algebra::Matrix> updated(weights.size());
         for (int i = 0; i < weights.size(); i++) {
-            updated[i] = weights[i] - learning_rate * gradients[i];
+            updated[i] = weights[i] - gradients[i].scalar_mul(learning_rate);
         }
         return updated;
     }
 }
+
+#endif

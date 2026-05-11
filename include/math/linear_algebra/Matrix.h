@@ -83,17 +83,21 @@ namespace math::linear_algebra {
             storage[row][col] = value;
         }
 
-        [[nodiscard]] size_t getCols() const {
+        [[nodiscard]] size_t getRows() const {
             return storage.size();
         }
 
-        [[nodiscard]] size_t getRows() const {
+        [[nodiscard]] size_t getCols() const {
             return storage[0].size();
         }
 
         [[nodiscard]] std::vector<float> getCol(const int index) const {
-            return storage[index];
+            std::vector<float> col;
+            for (const auto& row : storage)
+                col.push_back(row[index]);
+            return col;
         }
+
 
         [[nodiscard]] Matrix sum(const Matrix& matrix, const bool broadcasting = false) const {
             if ( ( matrix.storage.size() != storage.size() ||
@@ -155,6 +159,19 @@ namespace math::linear_algebra {
 
             }
 
+            return result;
+        }
+
+        [[nodiscard]] Matrix hadamard(const Matrix& matrix) const {
+            const auto rows = storage.size();
+            const auto cols = storage[0].size();
+
+            Matrix result { std::vector(rows, std::vector(cols, 0.f))};
+            for (size_t i = 0; i < rows; ++i) {
+                for (size_t j = 0; j < cols; ++j) {
+                    result.storage[i][j] = storage[i][j] * matrix.storage[i][j];
+                }
+            }
             return result;
         }
 
